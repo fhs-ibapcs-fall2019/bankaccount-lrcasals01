@@ -1,11 +1,10 @@
-
 public class BankAccount
 {
-    private double balance;
-    private String accountHolder;
-    private int accountNumber;
-    private String password;
-    private boolean loggedIn;
+    public double balance;
+    public String accountHolder;
+    public int accountNumber;
+    public String password;
+    public boolean loggedIn;
     
     public BankAccount(double balance, String accountHolder, int accountNumber,
     String password)
@@ -26,11 +25,12 @@ public class BankAccount
         }
     }
     
-    //accessor - gives access to the balance instance variable (attribute)
-    public double getBalance()
-    {
+    //allows for Deposit
+     public double Deposit(double amount)
+     {
         if(loggedIn)
         {
+            balance = balance + amount;
             return balance;
         }
       else
@@ -38,9 +38,42 @@ public class BankAccount
             throw new IllegalStateException("Please log in");
         }
     }
-
-    //log user out
     
+    //allows for Withdraw if enough funds are present
+      public double Withdraw(double amount)
+     {
+        if(loggedIn)
+        {
+            if(balance > amount)
+            {
+                balance = balance - amount;
+                return balance;
+            }
+            else
+            {
+                throw new IllegalStateException("Insufficent Funds");
+            }
+        }
+      else
+        {
+            throw new IllegalStateException("Please log in");
+        }
+    }
+
+    // Give Account Information
+    public String toString()
+    {
+      if (loggedIn){
+         return accountHolder + " Account# " + accountNumber 
+         + " Balance : $" + this.balance;  
+      }
+      else
+      {
+         throw new IllegalStateException("Please log in");
+      }
+    }
+    
+    //log user out
     public void logOut()
     {
         loggedIn = false;
